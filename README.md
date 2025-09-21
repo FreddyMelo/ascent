@@ -2,7 +2,7 @@
 
 A clean, modern web application that helps you take control of your finances without the complexity. Built with vanilla HTML, CSS, and JavaScript, Ascent gives you everything you need to track your money, set budgets, and build better financial habits.
 
-## Features That Actually Matter
+## Features 
 
 ### Dashboard Overview
 The dashboard gives you a quick snapshot of your financial health. You'll see your total balance, monthly income, expenses, and savings rate all in one place. The expense categories chart shows you exactly where your money is going, which is often the first step to better financial habits.
@@ -20,9 +20,6 @@ I added a learning section with practical financial advice. Right now it include
 The reports section shows you the bigger picture of your finances. See how your income compares to expenses, track spending by category, and identify trends over time. You can export your data if you want to do more detailed analysis elsewhere.
 
 ## Getting Started
-
-### No Installation Required
-Just open `index.html` in your browser and you're ready to go. No accounts, no downloads, no complicated setup. Your data stays on your device, so you have complete privacy.
 
 ### First Steps
 1. Start by adding your income - click "Add Income" and enter your monthly salary or other income sources
@@ -50,12 +47,6 @@ The dashboard gives you the key metrics at a glance. The expense chart shows you
 - Local Storage for data persistence
 - Responsive design that works on any device
 
-### Browser Support
-Works on all modern browsers: Chrome, Firefox, Safari, Edge. The responsive design means it works just as well on your phone as it does on your computer.
-
-### Data Storage
-Everything is stored locally in your browser. No cloud accounts, no data sharing, no privacy concerns. Your financial information stays on your device where it belongs.
-
 ## Customization
 
 ### Adding Categories
@@ -67,21 +58,6 @@ All the styling is in `styles.css`. The color scheme uses a dark theme with gree
 ### Extending Functionality
 The code is organized in a way that makes it easy to add new features. The modular structure means you can add new sections, modify existing functionality, or integrate with other tools without breaking anything.
 
-## Privacy and Security
-
-Your data never leaves your device. There are no network requests, no analytics, no tracking. The application runs entirely in your browser and stores everything locally. This means you have complete control over your financial information.
-
-## Troubleshooting
-
-### Data Not Saving
-Make sure JavaScript is enabled in your browser. If you're using private/incognito mode, some browsers restrict local storage access.
-
-### Layout Issues
-Try clearing your browser cache and reloading. The application uses modern CSS features, so make sure you're using a recent browser version.
-
-### Performance
-If you have thousands of transactions, the interface might start to slow down. Consider exporting old data and starting fresh periodically.
-
 ## Future Plans
 
 I'm always thinking about ways to make this better. Some ideas I'm considering:
@@ -91,13 +67,10 @@ I'm always thinking about ways to make this better. Some ideas I'm considering:
 - Goal setting and tracking features
 - Recurring transaction support
 
-## Contributing
+## Feedback
 
 This is a personal project, but I'm always interested in feedback and suggestions. If you find a bug or have an idea for improvement, feel free to let me know. The code is straightforward enough that you can probably figure out how to make changes yourself.
 
-## License
-
-This project is open source under the MIT License. Feel free to use it, modify it, or learn from it.
 
 ## Final Thoughts
 
