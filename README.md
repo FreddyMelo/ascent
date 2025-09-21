@@ -1,6 +1,6 @@
 # Ascent - Personal Finance Tracker
 
-A clean, modern web application that helps you take control of your finances without the complexity. Built with vanilla HTML, CSS, and JavaScript, Ascent gives you everything you need to track your money, set budgets, and build better financial habits.
+A clean, modern web application that helps you take control of your finances without the complexity. Built with HTML, CSS, and JavaScript, Ascent gives you everything you need to track your money, set budgets, and build better financial habits.
 
 ## Features 
 
