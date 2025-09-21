@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ascent - Personal Finance Management</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-content">
+                <div class="logo">
+                    <div class="custom-logo">
+                        <div class="logo-shape logo-left-outer"></div>
+                        <div class="logo-shape logo-left-inner"></div>
+                        <div class="logo-shape logo-right"></div>
+                    </div>
+                    <h1>Ascent</h1>
+                </div>
+                <nav class="nav-menu">
+                    <button class="nav-btn active" data-section="dashboard">
+                        <i class="fas fa-home"></i>
+                        Dashboard
+                    </button>
+                    <button class="nav-btn" data-section="transactions">
+                        <i class="fas fa-exchange-alt"></i>
+                        Transactions
+                    </button>
+                    <button class="nav-btn" data-section="budget">
+                        <i class="fas fa-wallet"></i>
+                        Budget
+                    </button>
+                    <button class="nav-btn" data-section="reports">
+                        <i class="fas fa-chart-bar"></i>
+                        Reports
+                    </button>
+                    <button class="nav-btn" data-section="learning">
+                        <i class="fas fa-graduation-cap"></i>
+                        Learning
+                    </button>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <div class="main-wrapper">
+            <!-- Header -->
+            <header class="header">
+                <div class="header-content">
+                    <div class="header-text">
+                        <h2>Welcome back!</h2>
+                        <p>Track your finances and manage your budget effectively.</p>
+                    </div>
+                </div>
+            </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Dashboard Section -->
+            <section id="dashboard" class="content-section active">
+                <div class="dashboard-grid">
+                    <!-- Quick Actions -->
+                    <div class="quick-actions">
+                        <h3>Quick Actions</h3>
+                        <div class="action-buttons">
+                            <button class="action-btn" id="addIncome">
+                                <div class="icon-circle">
+                                    <i class="fas fa-plus"></i>
+                                </div>
+                                <span>Add Income</span>
+                            </button>
+                            <button class="action-btn" id="addExpense">
+                                <div class="icon-circle">
+                                    <i class="fas fa-minus"></i>
+                                </div>
+                                <span>Add Expense</span>
+                            </button>
+                            <button class="action-btn" id="setBudget">
+                                <div class="icon-circle">
+                                    <i class="fas fa-wallet"></i>
+                                </div>
+                                <span>Set Budget</span>
+                            </button>
+                            <button class="action-btn" id="viewReports">
+                                <div class="icon-circle">
+                                    <i class="fas fa-chart-bar"></i>
+                                </div>
+                                <span>View Reports</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Financial Overview Cards -->
+                    <div class="overview-cards">
+                        <!-- Expense Categories Chart -->
+                        <div class="card chart-card">
+                            <div class="card-header">
+                                <h3>Expense Categories</h3>
+                                <i class="fas fa-chart-pie"></i>
+                            </div>
+                            <div class="card-content">
+                                <div class="expense-chart-container">
+                                    <canvas id="expenseChart" width="200" height="200"></canvas>
+                                </div>
+                                <div class="chart-legend" id="expenseChartLegend">
+                                    <!-- Legend will be populated by JavaScript -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Financial Cards Container -->
+                        <div class="financial-cards">
+                            <div class="card balance-card">
+                                <div class="card-header">
+                                    <h3>Total Balance</h3>
+                                    <i class="fas fa-dollar-sign"></i>
+                                </div>
+                                <div class="card-content">
+                                    <span class="amount" id="totalBalance">$0.00</span>
+                                    <div class="change positive">
+                                        <i class="fas fa-arrow-up"></i>
+                                        <span>+2.5% from last month</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card income-card">
+                                <div class="card-header">
+                                    <h3>Monthly Income</h3>
+                                    <i class="fas fa-arrow-up"></i>
+                                </div>
+                                <div class="card-content">
+                                    <span class="amount" id="monthlyIncome">$0.00</span>
+                                    <div class="change positive">
+                                        <i class="fas fa-plus"></i>
+                                        <span>Add income</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card expense-card">
+                                <div class="card-header">
+                                    <h3>Monthly Expenses</h3>
+                                    <i class="fas fa-arrow-down"></i>
+                                </div>
+                                <div class="card-content">
+                                    <span class="amount" id="monthlyExpenses">$0.00</span>
+                                    <div class="change negative">
+                                        <i class="fas fa-plus"></i>
+                                        <span>Add expense</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card savings-card">
+                                <div class="card-header">
+                                    <h3>Savings Rate</h3>
+                                    <i class="fas fa-piggy-bank"></i>
+                                </div>
+                                <div class="card-content">
+                                    <span class="amount" id="savingsRate">0%</span>
+                                    <div class="change neutral">
+                                        <i class="fas fa-info-circle"></i>
+                                        <span>Target: 20%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Transactions -->
+                    <div class="recent-transactions">
+                        <h3>Recent Transactions</h3>
+                        <div class="transactions-list" id="recentTransactionsList">
+                            <div class="no-transactions">
+                                <i class="fas fa-receipt"></i>
+                                <p>No transactions yet. Add your first transaction to get started!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Transactions Section -->
+            <section id="transactions" class="content-section">
+                <div class="section-header">
+                    <h2>Transaction Management</h2>
+                    <button class="btn btn-primary" id="addTransactionBtn">
+                        <i class="fas fa-plus"></i>
+                        Add Transaction
+                    </button>
+                </div>
+
+                <div class="filters">
+                    <select id="transactionType">
+                        <option value="all">All Transactions</option>
+                        <option value="income">Income</option>
+                        <option value="expense">Expenses</option>
+                    </select>
+                    <select id="transactionCategory">
+                        <option value="all">All Categories</option>
+                        <option value="food">Food & Dining</option>
+                        <option value="transportation">Transportation</option>
+                        <option value="entertainment">Entertainment</option>
+                        <option value="utilities">Utilities</option>
+                        <option value="shopping">Shopping</option>
+                        <option value="healthcare">Healthcare</option>
+                        <option value="housing">Housing</option>
+                        <option value="savings">Savings</option>
+                        <option value="salary">Salary</option>
+                        <option value="freelance">Freelance</option>
+                        <option value="investment">Investment</option>
+                    </select>
+                    <input type="date" id="dateFilter" placeholder="Filter by date">
+                </div>
+
+                <div class="transactions-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Description</th>
+                                <th>Category</th>
+                                <th>Type</th>
+                                <th>Amount</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="transactionsTableBody">
+                            <tr class="no-data">
+                                <td colspan="6">No transactions found. Add your first transaction!</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Budget Section -->
+            <section id="budget" class="content-section">
+                <div class="section-header">
+                    <h2>Budget Management</h2>
+                    <button class="btn btn-primary" id="createBudgetBtn">
+                        <i class="fas fa-plus"></i>
+                        Create Budget
+                    </button>
+                </div>
+
+                <div class="budget-overview">
+                    <div class="budget-summary">
+                        <h3>Monthly Budget Summary</h3>
+                        <div class="budget-total">
+                            <span class="label">Total Budget:</span>
+                            <span class="amount" id="totalBudget">$0.00</span>
+                        </div>
+                        <div class="budget-spent">
+                            <span class="label">Total Spent:</span>
+                            <span class="amount" id="totalSpent">$0.00</span>
+                        </div>
+                        <div class="budget-remaining">
+                            <span class="label">Remaining:</span>
+                            <span class="amount" id="budgetRemaining">$0.00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="budget-categories">
+                    <h3>Budget Categories</h3>
+                    <div class="categories-grid" id="budgetCategoriesGrid">
+                        <div class="no-budgets">
+                            <i class="fas fa-wallet"></i>
+                            <p>No budgets created yet. Create your first budget category!</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Reports Section -->
+            <section id="reports" class="content-section">
+                <div class="section-header">
+                    <h2>Financial Reports</h2>
+                    <div class="report-controls">
+                        <select id="reportPeriod">
+                            <option value="month">This Month</option>
+                            <option value="quarter">This Quarter</option>
+                            <option value="year">This Year</option>
+                        </select>
+                        <button class="btn btn-secondary" id="exportReportBtn">
+                            <i class="fas fa-download"></i>
+                            Export Report
+                        </button>
+                    </div>
+                </div>
+
+                <div class="reports-grid">
+                    <div class="report-card">
+                        <h3>Income vs Expenses</h3>
+                        <div class="chart-placeholder" id="incomeExpenseChart">
+                            <i class="fas fa-chart-pie"></i>
+                            <p>Chart will appear here</p>
+                        </div>
+                    </div>
+
+                    <div class="report-card">
+                        <h3>Expense Categories</h3>
+                        <div class="chart-placeholder" id="expenseCategoriesChart">
+                            <i class="fas fa-chart-bar"></i>
+                            <p>Chart will appear here</p>
+                        </div>
+                    </div>
+
+                    <div class="report-card">
+                        <h3>Monthly Trends</h3>
+                        <div class="chart-placeholder" id="monthlyTrendsChart">
+                            <i class="fas fa-chart-line"></i>
+                            <p>Chart will appear here</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Learning Section -->
+            <section id="learning" class="content-section">
+                <div class="section-header">
+                    <h2>Learning Center</h2>
+                </div>
+                
+                <div class="learning-content">
+                    <div class="learning-grid">
+                        <div class="learning-card">
+                            <div class="learning-card-header">
+                                <i class="fas fa-calculator"></i>
+                                <h3>Budgeting Basics</h3>
+                            </div>
+                            <div class="learning-card-content">
+                                <p>Master the fundamentals of budgeting and take control of your personal finances.</p>
+                                <button class="btn btn-primary" id="budgetingBasicsBtn" type="button" onclick="window.ascent && window.ascent.openArticle('budgeting-basics')">Learn More</button>
+                            </div>
+                        </div>
+
+                        <div class="learning-card">
+                            <div class="learning-card-header">
+                                <i class="fas fa-car"></i>
+                                <h3>Buying a Car</h3>
+                            </div>
+                            <div class="learning-card-content">
+                                <p>Learn everything you need to know about financing and purchasing your next vehicle.</p>
+                                <button class="btn btn-primary" id="buyingCarBtn" type="button" onclick="window.ascent && window.ascent.openArticle('buying-a-car')">Learn More</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Article Section -->
+            <section id="article" class="content-section">
+                <div class="article-header">
+                    <button class="back-btn" onclick="ascent.goBackToLearning()">
+                        <i class="fas fa-arrow-left"></i>
+                        Back to Learning
+                    </button>
+                    <h1 id="articleTitle">Article Title</h1>
+                    <div class="article-meta">
+                        <span class="article-category" id="articleCategory">Category</span>
+                        <span class="article-date" id="articleDate">Date</span>
+                    </div>
+                </div>
+                
+                <div class="article-content" id="articleContent">
+                    <div class="article-body">
+                        <!-- Car Buying Content -->
+                        <div id="car-buying-content">
+                            <p>The best car is the one you can afford.</p>
+                            
+                            <h2>The Money Guy 20/3/8 Rule: Your Roadmap to a Smarter Car Purchase</h2>
+                            <p>Buying a car can feel a bit like stepping onto a dealership lot in flip-flops. Suddenly you're overwhelmed, underprepared, and at risk of spending far more than you planned. The best option is always to buy what you can afford in cash, freeing up more money for important priorities like paying down high-interest debt. But if you need a car beyond what is currently available to you in cash, taking on a reasonable car loan can make sense, especially if you follow the Money Guy Show's 20/3/8 Rule. Think of it as your financial GPS for navigating a smart, stress-free car purchase.
+                            </p>
+                            
+                            <h3>Step 1: The 20% Down Payment</h3>
+                            <p>Start with a solid foundation: put down at least 20% of the car's purchase price. Why? Because it prevents you from being "upside-down" on your loan (owing more than the car is worth, as a typical car depreciates by 10-20% in the first year). Plus, it immediately lowers your monthly payment. Consider it the equivalent of putting on good shoes before you hit that dealership pavement—sturdy, reliable, and confidence-boosting.</p>
+                            
+                            <h3>Step 2: Finance for 3 Years or Less</h3>
+                            <p>This is where discipline pays off. Keep your loan term at three years (36 months) or shorter. It may mean choosing a slightly less flashy ride, but it also means you'll build equity faster and pay less in interest. Shorter terms keep you from dragging a car loan around like unwanted luggage on a cross-country trip.</p>
+
+                            <h3>Step 3: 8% of Your Income</h3>
+                            <p>Finally, your car payment should never exceed 8% of your gross monthly income. If you're making $4,000 a month, that means your car payment should be $320 or less. This ensures your shiny new wheels don't wreck your budget. Remember, on your road to financial security, a car is a tool, not a toy.</p>
+
+                            <h2>Putting It All Together</h2>
+                            <p>So, when you're eyeing that sleek new sedan (or maybe that SUV that makes you feel like a road warrior), run the 20/3/8 check first. If the numbers don't add up, don't sweat it—there's always another car that will fit both your lifestyle and your wallet.</p>
+                            <p>Following the 20/3/8 Rule may not land you the most jaw-dropping car on the lot, but it will help you drive away with peace of mind, financial freedom, and maybe even enough leftover cash to spring for those heated seats.</p>
+                            <p>Because at the end of the day, the real luxury isn't leather trim; it's knowing you're in the driver's seat of your finances.</p>
+                        </div>
+
+                        <!-- Budgeting Basics Content -->
+                        <div id="budgeting-basics-content" style="display: none;">
+                            <h2>How to Budget: Proven Strategies from Trusted Financial Experts</h2>
+                            <p>Budgeting is not about restriction; it is about creating a plan that balances financial responsibility with enjoying life. The Money Guys, Brian Preston and Bo Hanson, emphasize that a good budget should be sustainable, flexible, and aligned with your long-term goals. Their approach focuses on percentages, priorities, and intentional spending rather than micromanaging every dollar.</p>
+                            
+                            <h3>Focus on the Big Three Expenses</h3>
+                            <p>The Money Guys often highlight that your financial health depends far more on controlling major expenses than cutting small ones. Instead of obsessing over skipping coffee, focus on:</p>
+                            <ul>
+                                <li><strong>Housing:</strong> Keep rent or mortgage payments below 25–28 percent of your gross income.</li>
+                                <li><strong>Transportation:</strong> Drive cars you can afford without heavy financing. Avoid car payments that strain your monthly cash flow.</li>
+                                <li><strong>Food:</strong> Plan meals and shop intentionally. Restaurants and takeout can easily overwhelm a budget if not managed.</li>
+                            </ul>
+                            <p>By optimizing these categories, you free up room for savings and lifestyle spending without feeling deprived.</p>
+                            
+                            <h3>Use the 20/60/20 Budgeting Framework</h3>
+                            <p>A simple, balanced budget can be built using the Money Guys' 20/60/20 rule:</p>
+                            <ul>
+                                <li><strong>20% for saving and investing.</strong> This includes retirement contributions, building an emergency fund, or saving toward big goals.</li>
+                                <li><strong>60% for essentials.</strong> Cover housing, utilities, groceries, insurance, transportation, and other non-negotiables.</li>
+                                <li><strong>20% for lifestyle spending.</strong> This category funds travel, entertainment, hobbies, dining out, and other discretionary expenses.</li>
+                            </ul>
+                            <p>This structure ensures you are prioritizing the future while still enjoying the present.</p>
+                            
+                            <h3>Automate Your Savings and Essentials</h3>
+                            <p>The Money Guys stress that budgeting works best when it is automated. Setting up direct deposits or automatic transfers ensures that savings and fixed expenses are handled before you even think about discretionary spending. This reduces the temptation to overspend and helps you stay consistent.</p>
+                            
+                            <h3>Build in Flexibility</h3>
+                            <p>Budgets should adapt as life changes. Review your budget each month and adjust based on new expenses, raises, or unexpected events. The Money Guys recommend planning for irregular expenses with sinking funds—separate savings for items like vacations, car repairs, or holiday gifts. By planning ahead, you avoid debt or budget stress when these costs arrive.</p>
+                            
+                            <h3>Keep Lifestyle Spending Reasonable</h3>
+                            <p>The Money Guys are clear that you do not need to eliminate fun to be financially successful. Instead, cap lifestyle expenses around 20 percent of your income. This gives you freedom to enjoy your money while keeping priorities like savings and essentials front and center.</p>
+                        </div>
+
+
+                         <div class="car-calculator">
+                             <div class="calculator-header">
+                                 <h4>Car Purchase Calculator</h4>
+                                 <p>Enter your details below to see how your car purchase stacks up against the 20/3/8 rule.</p>
+                             </div>
+                             
+                             <div class="calculator-form">
+                                 <div class="form-row">
+                                     <div class="form-group">
+                                         <label for="grossIncome">Gross Monthly Income ($)</label>
+                                         <input type="number" id="grossIncome" placeholder="e.g., 5000" min="0" step="100">
+                                     </div>
+                                     <div class="form-group">
+                                         <label for="carPrice">Car Purchase Price ($)</label>
+                                         <input type="number" id="carPrice" placeholder="e.g., 25000" min="0" step="100">
+                                     </div>
+                                 </div>
+                                 
+                                 <div class="form-row">
+                                     <div class="form-group">
+                                         <label for="downPaymentPercent">Down Payment</label>
+                                         <div class="slider-container">
+                                             <input type="range" id="downPaymentPercent" min="0" max="50" value="20" step="1">
+                                             <div class="slider-labels">
+                                                 <span>0%</span>
+                                                 <span id="downPaymentPercentValue">20%</span>
+                                                 <span>50%</span>
+                                             </div>
+                                             <div class="slider-amount">
+                                                 <span id="downPaymentAmount">$0</span>
+                                             </div>
+                                         </div>
+                                     </div>
+                                     <div class="form-group">
+                                         <label for="loanTerm">Loan Term (months)</label>
+                                         <select id="loanTerm">
+                                             <option value="24">24 months</option>
+                                             <option value="36" selected>36 months</option>
+                                             <option value="48">48 months</option>
+                                             <option value="60">60 months</option>
+                                             <option value="72">72 months</option>
+                                         </select>
+                                     </div>
+                                 </div>
+                                 
+                                 <div class="form-row">
+                                     <div class="form-group">
+                                         <label for="interestRate">Interest Rate (%)</label>
+                                         <input type="number" id="interestRate" placeholder="e.g., 5.5" min="0" max="30" step="0.1" value="5.5">
+                                     </div>
+                                     <div class="form-group">
+                                         <button type="button" id="calculateCar" class="btn btn-primary">Calculate</button>
+                                     </div>
+                                 </div>
+                             </div>
+                             
+                             <div class="calculator-results" id="carResults" style="display: none;">
+                                 <div class="results-header">
+                                     <h4>Your 20/3/8 Analysis</h4>
+                                 </div>
+                                 
+                                 <div class="rule-checks">
+                                     <div class="rule-check" id="downPaymentCheck">
+                                         <div class="rule-icon">⏳</div>
+                                         <div class="rule-content">
+                                             <h5>20% Down Payment Rule</h5>
+                                             <p class="rule-status">Calculating...</p>
+                                         </div>
+                                     </div>
+                                     
+                                     <div class="rule-check" id="loanTermCheck">
+                                         <div class="rule-icon">⏳</div>
+                                         <div class="rule-content">
+                                             <h5>3-Year Loan Term Rule</h5>
+                                             <p class="rule-status">Calculating...</p>
+                                         </div>
+                                     </div>
+                                     
+                                     <div class="rule-check" id="incomeCheck">
+                                         <div class="rule-icon">⏳</div>
+                                         <div class="rule-content">
+                                             <h5>8% Income Rule</h5>
+                                             <p class="rule-status">Calculating...</p>
+                                         </div>
+                                     </div>
+                                 </div>
+                                 
+                                 <div class="overall-result" id="overallResult">
+                                     <div class="result-icon">⏳</div>
+                                     <div class="result-content">
+                                         <h4>Overall Assessment</h4>
+                                         <p class="result-message">Calculating your results...</p>
+                                     </div>
+                                 </div>
+                                 
+                                 <div class="payment-details" id="paymentDetails">
+                                     <h5>Payment Breakdown</h5>
+                                     <div class="detail-row">
+                                         <span>Monthly Payment:</span>
+                                         <span id="monthlyPayment">$0</span>
+                                     </div>
+                                     <div class="detail-row">
+                                         <span>Total Interest:</span>
+                                         <span id="totalInterest">$0</span>
+                                     </div>
+                                     <div class="detail-row">
+                                         <span>Total Cost:</span>
+                                         <span id="totalCost">$0</span>
+                                     </div>
+                                 </div>
+                                 
+                                 <div class="recommendations" id="recommendations">
+                                     <h5>Recommendations</h5>
+                                     <ul id="recommendationList">
+                                     </ul>
+                                 </div>
+                             </div>
+                         </div>
+
+                     </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <div id="transactionModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">Add Transaction</h3>
+                <button class="close-btn" id="closeModal">&times;</button>
+            </div>
+            <form id="transactionForm">
+                <div class="form-group">
+                    <label for="transactionDescription">Description</label>
+                    <input type="text" id="transactionDescription" required>
+                </div>
+                <div class="form-group">
+                    <label for="transactionAmount">Amount</label>
+                    <input type="number" id="transactionAmount" step="0.01" required>
+                </div>
+                <div class="form-group">
+                    <label for="transactionCategorySelect">Category</label>
+                    <select id="transactionCategorySelect" required>
+                        <option value="">Select Category</option>
+                        <optgroup label="Expenses">
+                            <option value="food">Food & Dining</option>
+                            <option value="transportation">Transportation</option>
+                            <option value="entertainment">Entertainment</option>
+                            <option value="utilities">Utilities</option>
+                            <option value="shopping">Shopping</option>
+                            <option value="healthcare">Healthcare</option>
+                            <option value="housing">Housing</option>
+                            <option value="savings">Savings</option>
+                        </optgroup>
+                        <optgroup label="Income">
+                            <option value="salary">Salary</option>
+                            <option value="freelance">Freelance</option>
+                            <option value="investment">Investment</option>
+                        </optgroup>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="transactionDate">Date</label>
+                    <input type="date" id="transactionDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="transactionTypeSelect">Type</label>
+                    <select id="transactionTypeSelect" required>
+                        <option value="expense">Expense</option>
+                        <option value="income">Income</option>
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" id="cancelTransaction">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Transaction</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="budgetModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Create Budget</h3>
+                <button class="close-btn" id="closeBudgetModal">&times;</button>
+            </div>
+            <form id="budgetForm">
+                <div class="form-group">
+                    <label for="budgetCategory">Category</label>
+                    <select id="budgetCategory" required>
+                        <option value="">Select Category</option>
+                        <option value="food">Food & Dining</option>
+                        <option value="transportation">Transportation</option>
+                        <option value="entertainment">Entertainment</option>
+                        <option value="utilities">Utilities</option>
+                        <option value="shopping">Shopping</option>
+                        <option value="healthcare">Healthcare</option>
+                        <option value="housing">Housing</option>
+                        <option value="savings">Savings</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="budgetAmount">Budget Amount</label>
+                    <input type="number" id="budgetAmount" step="0.01" required>
+                </div>
+                <div class="form-group">
+                    <label for="budgetPeriod">Period</label>
+                    <select id="budgetPeriod" required>
+                        <option value="monthly">Monthly</option>
+                        <option value="weekly">Weekly</option>
+                        <option value="yearly">Yearly</option>
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" id="cancelBudget">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Create Budget</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Custom Edit Budget Modal -->
+    <div id="editBudgetModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Edit Budget Amount</h3>
+                <button class="close-btn" id="closeEditBudgetModal">&times;</button>
+            </div>
+            <form id="editBudgetForm">
+                <div class="form-group">
+                    <label for="editBudgetCategory">Category</label>
+                    <input type="text" id="editBudgetCategory" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="editBudgetAmount">Budget Amount</label>
+                    <input type="number" id="editBudgetAmount" step="0.01" required>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-danger" id="removeBudget">Remove</button>
+                    <div class="form-actions-right">
+                        <button type="button" class="btn btn-secondary" id="cancelEditBudget">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Update Budget</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Custom Confirmation Modal -->
+    <div id="confirmModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Confirm Action</h3>
+                <button class="close-btn" id="closeConfirmModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p id="confirmMessage">Are you sure you want to perform this action?</p>
+            </div>
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary" id="cancelConfirm">Cancel</button>
+                <button type="button" class="btn btn-danger" id="confirmAction">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
